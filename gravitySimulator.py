@@ -31,11 +31,14 @@ screen_center = (screen.get_width() // 2, screen.get_height() // 2)
 
 def spot_around_circle(radius : int, amount : int, index : int, center = [0, 0]):
     angle = index * 360 / amount
-    location = [math.cos(angle) * radius + center[0], math.sin(angle) * radius + center[1]]
+    if angle > 180: angle = 180 - angle
+    print(angle)
+    location = Vector2(radius, Vector2.degrees_to_radians(angle), polar=True)
+    location += Vector2(center)
     return location
 
 #Create a bunch of bodies
-bodies_colors = ["blue", "red", "yellow", "green", "purple", "brown", "grey"]
+bodies_colors = ["blue", "red", "yellow", "green", "purple", "brown"]
 for i, color in enumerate(bodies_colors):
     ball = body(50, spot_around_circle(100, len(bodies_colors), i, center=[0, 0]), color)
 
